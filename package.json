@@ -1,0 +1,41 @@
+{
+	"name": "pi-ollama-models",
+	"version": "0.1.0",
+	"description": "Pi extension: plug the full Ollama cloud model catalog (ollama.com) into /model as a live provider — local models included as a bonus",
+	"type": "module",
+	"main": "./src/index.ts",
+	"extensions": [
+		"./src/index.ts"
+	],
+	"author": "darsvador",
+	"license": "MIT",
+	"keywords": [
+		"pi",
+		"pi-extension",
+		"pi-package",
+		"ollama",
+		"models",
+		"provider",
+		"cloud",
+		"discovery"
+	],
+	"files": [
+		"src",
+		"README.md",
+		"LICENSE",
+		"ollama-models.example.json"
+	],
+	"scripts": {
+		"typecheck": "tsc --noEmit"
+	},
+	"engines": {
+		"node": ">=22.19.0"
+	},
+	"peerDependencies": {
+		"@earendil-works/pi-coding-agent": ">=1.0.0"
+	},
+	"devDependencies": {
+		"@earendil-works/pi-coding-agent": "^1.3.0",
+		"typescript": "^5.9.3"
+	}
+}

@@ -1,0 +1,50 @@
+{
+	// Ollama server root — do NOT append /v1, the extension appends /api/tags and /v1 itself
+	"baseUrl": "http://localhost:11434",
+	// Pi provider id shown in /model (models appear as "ollama/<model-name>")
+	"providerId": "ollama",
+	"name": "Ollama",
+	"api": "openai-completions",
+	// POST /api/show per model for capabilities + context length (recommended)
+	"show": true,
+	"showConcurrency": 6,
+	// Catalog freshness threshold: auto-refresh only when the last successful fetch
+	// is older than this. /ollama-refresh always fetches. Default 7 days; 0 = every time.
+	"refreshAfterMs": 604800000,
+	// Context window resolution:
+	//   "auto" (default) → smallest of num_ctx / tags context_length / GGUF context_length,
+	//                     falling back to defaultContextWindow when nothing is reported
+	//   number           → fixed value for all models
+	"contextWindow": "auto",
+	"defaultContextWindow": 4096,
+	// Show "7.6B Q4_K_M" style annotations in the /model picker
+	"annotateName": true,
+	// 合并 ollama.com 的完整云模型目录（本地 /api/tags 只包含拉取过/用过的云模型）。
+	// 目录条目注册为 "{name}:cloud"（已验证能正确路由到对应远端变体）。默认 true。
+	"cloudCatalog": true,
+	// "cloudCatalogUrl": "https://ollama.com/api/tags",
+	// Filtering (glob, case-insensitive)
+	"includePatterns": [],
+	"excludePatterns": ["*embed*"],        // 旧版写法，仍支持；与 filters 取并集
+	// 完整过滤器（语义对齐 pi-live-models）：exclude 永远优先；include 非空即白名单；
+	// 通配符大小写不敏感；正则大小写敏感；*By 字段规则对 /api/tags 条目取点路径。
+	"filters": {
+		// "include":      ["*kimi*"],                    // id 通配白名单
+		// "exclude":      ["*audio*", "*embed*"],        // id 通配黑名单
+		// "includeRegex": ["^gpt-oss"],
+		// "excludeRegex": ["^mistral-large-3"],
+		// "includeBy":    { "capabilities": ["vision"] },            // 只留多模态
+		// "excludeBy":    { "details.parameter_size": ["321B"] },    // 字段黑名单
+		// "use":          ["my-preset"]                  // 引用 presets 里的命名过滤
+	},
+	// "presets": {
+	// 	"big-only": { "excludeRegex": [":20b", ":27b"] }
+	// },
+	// Per-model overrides; keys are raw Ollama names like "qwen3:14b"
+	"modelOverrides": {
+		"qwen3:14b": {
+			"contextWindow": 32768,
+			"compat": { "thinkingFormat": "qwen" }
+		}
+	}
+}
